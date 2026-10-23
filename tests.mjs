@@ -9,3 +9,8 @@ assert.match(parse('![图片](uploads/a.png)').html,/src="uploads\/a.png"/);
 await writeFile('content/notes/test-draft.md','---\n{"title":"不公开","date":"2026-10-23","draft":true}\n---\n秘密');
 try{await build();assert.ok(!JSON.parse(await readFile('dist/notes.json')).some(n=>n.id==='test-draft'));}finally{await unlink('content/notes/test-draft.md')}
 console.log('PASS: table, HTML escaping, unsafe links, image, draft exclusion');
+
+const decap = parseNote('---\n"draft": false,\n"title": "编辑器发布",\n"date": "2026-10-23"\n---\n正文','decap');
+assert.equal(decap.title,'编辑器发布');
+assert.equal(decap.draft,false);
+assert.match(decap.html,/正文/);
