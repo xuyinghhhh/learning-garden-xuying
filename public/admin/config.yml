@@ -1,0 +1,26 @@
+backend:
+  name: github
+  repo: xuyinghhhh/learning-garden-xuying
+  branch: main
+  base_url: https://learning-garden-auth.15243328742.workers.dev
+media_folder: public/uploads
+public_folder: /learning-garden-xuying/uploads
+locale: zh_Hans
+collections:
+  - name: notes
+    label: 学习笔记
+    folder: content/notes
+    create: true
+    extension: md
+    format: json-frontmatter
+    frontmatter_delimiter: '---'
+    slug: '{{year}}-{{month}}-{{day}}-{{slug}}'
+    fields:
+      - {label: 标题, name: title, widget: string}
+      - {label: 日期, name: date, widget: datetime, format: 'YYYY-MM-DD', time_format: false}
+      - {label: 主题, name: topic, widget: string}
+      - {label: 类型, name: kind, widget: select, options: [学习笔记, 沟通整理, 想法与实践, 格式示例]}
+      - {label: 简介, name: summary, widget: text}
+      - {label: 草稿（不公开）, name: draft, widget: boolean, default: true}
+      - {label: 正文, name: body, widget: markdown}
+
