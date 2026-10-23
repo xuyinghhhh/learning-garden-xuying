@@ -1,0 +1,4 @@
+export function category(n){return ['个人网站搭建','网站建设'].includes(n.topic)?'网站建设':n.topic||'未分类'}
+export function tags(n){return Array.isArray(n.tags)?n.tags:[]}
+export function filterNotes(notes,{q='',topic='',month='',tag=''}={}){q=q.trim().toLocaleLowerCase();return notes.filter(n=>(!topic||category(n)===topic)&&(!month||(n.date||'').startsWith(month))&&(!tag||tags(n).includes(tag))&&(!q||[n.title,n.summary,n.body,n.topic,...tags(n)].join(' ').toLocaleLowerCase().includes(q)))}
+export function snippet(body='',q=''){const plain=body.replace(/!\[[^\]]*\]\([^)]*\)/g,'').replace(/[#*`>|]/g,'').replace(/\s+/g,' ');const index=q?plain.toLocaleLowerCase().indexOf(q.toLocaleLowerCase()):-1;const start=Math.max(0,index-35);return (start?'…':'')+plain.slice(start,start+110)+(plain.length>start+110?'…':'')}
